@@ -15,7 +15,7 @@ import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ContaBancoUi extends JFrame {
+public class JContaBancoUi extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     
@@ -33,7 +33,7 @@ public class ContaBancoUi extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    ContaBancoUi frame = new ContaBancoUi();
+                    JContaBancoUi frame = new JContaBancoUi();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -42,7 +42,7 @@ public class ContaBancoUi extends JFrame {
         });
     }
 
-    public ContaBancoUi() {
+    public JContaBancoUi() {
         setTitle("Banco Digital - Gerenciamento de Conta");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 500, 600);
