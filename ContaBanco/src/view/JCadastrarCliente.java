@@ -1,27 +1,31 @@
 package view;
+import controller.ContaBanco;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.EventQueue;
+//import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.border.LineBorder;
-import javax.swing.SwingConstants;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
+// import controller.ContaBanco;
 
 public class JCadastrarCliente extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -34,12 +38,13 @@ public class JCadastrarCliente extends JFrame {
     private static final Color COR_FUNDO = new Color(240, 242, 245);       // Cinza claro
     private static final Color COR_CARD = Color.WHITE;
     private static final Color COR_TEXTO = new Color(33, 33, 33);
-    private static final Color COR_TEXTO_CLARO = new Color(117, 117, 117);
+    // private static final Color COR_TEXTO_CLARO = new Color(117, 117, 117);
     
     private JPanel contentPane;
     private JTextField txtNomeCliente;
     private JComboBox<String> cmbTipoConta;
 
+    /*    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -52,6 +57,8 @@ public class JCadastrarCliente extends JFrame {
             }
         });
     }
+    */
+
 
     public JCadastrarCliente() {
         setTitle("Cadastro de Cliente");
@@ -114,9 +121,29 @@ public class JCadastrarCliente extends JFrame {
         JButton btnCadastrar = new JButton("Cadastrar");
         btnCadastrar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		if(txtNomeCliente) {
-        			
-        		}
+
+                // Novo cadastro de cliente
+                ContaBanco conta = new ContaBanco();
+                
+                String nome = getTxtNomeCliente().getText();
+                String tipo = (String) getCmbTipoConta().getSelectedItem();
+                
+                // Valida a conta e credita com base no tipo da conta
+                if(conta.validarDados(nome, tipo)){
+                    if(tipo.equals("Conta Corrente")) {
+                    conta.setValorAtual(50.00);
+
+                    } 
+                    else if(tipo.equals("Conta Poupança")) {
+                    conta.setValorAtual(150.00);
+
+                    }
+
+                    dispose(); // Fechando tela de cadastro
+                    telaPrincipal(); // Abrindo tela principal
+
+                }
+
         	}
         });
         btnCadastrar.setBounds(30, 190, 170, 40);
@@ -129,7 +156,34 @@ public class JCadastrarCliente extends JFrame {
         estilizarBotao(btnCancelar, COR_ALERTA);
         panelCard.add(btnCancelar);
     }
+
+    public void telaPrincipal(){
+        JContaBancoUi telaPrincipal = new JContaBancoUi();
+        telaPrincipal.setLocationRelativeTo(null);
+        telaPrincipal.setVisible(true); 
+    }
     
+    
+    // Método modificadores (getters and setters)
+
+    public JTextField getTxtNomeCliente() {
+        return txtNomeCliente;
+    }
+
+    public void setTxtNomeCliente(JTextField txtNomeCliente) {
+        this.txtNomeCliente = txtNomeCliente;
+    }
+
+    public JComboBox<String> getCmbTipoConta() {
+        return cmbTipoConta;
+    }
+
+    public void setCmbTipoConta(JComboBox<String> cmbTipoConta) {
+        this.cmbTipoConta = cmbTipoConta;
+    }
+
+
+
     // Método para criar painel com bordas arredondadas
     private JPanel criarPainelArredondado() {
         return new JPanel() {
