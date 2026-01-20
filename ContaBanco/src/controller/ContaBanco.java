@@ -16,7 +16,7 @@ public class ContaBanco{
 	// String nomeCliente, String tipoConta
 	public ContaBanco(){
 		this.setStatus(false);
-		// System.out.println("Conta criada para " + nomeCliente + ". Bonus de R$ " + this.getValorAtual() + " Adicionado a conta");
+		
 		
 	}
 	

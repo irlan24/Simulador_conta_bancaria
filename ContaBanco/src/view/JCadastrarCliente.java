@@ -140,7 +140,7 @@ public class JCadastrarCliente extends JFrame {
                     }
 
                     dispose(); // Fechando tela de cadastro
-                    telaPrincipal(); // Abrindo tela principal
+                    telaPrincipal(conta); // Abrindo tela principal
 
                 }
 
@@ -157,8 +157,8 @@ public class JCadastrarCliente extends JFrame {
         panelCard.add(btnCancelar);
     }
 
-    public void telaPrincipal(){
-        JContaBancoUi telaPrincipal = new JContaBancoUi();
+    public void telaPrincipal(ContaBanco conta){
+        JContaBancoUi telaPrincipal = new JContaBancoUi(conta);
         telaPrincipal.setLocationRelativeTo(null);
         telaPrincipal.setVisible(true); 
     }

@@ -1,19 +1,27 @@
 package view;
-
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.Color;
 import java.awt.Cursor;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import java.util.Locale;
+
+
+
+import controller.ContaBanco;
 
 public class JContaBancoUi extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -28,7 +36,18 @@ public class JContaBancoUi extends JFrame {
     private static final Color COR_CARD = Color.WHITE;
     private static final Color COR_TEXTO = new Color(33, 33, 33);
     private static final Color COR_TEXTO_CLARO = new Color(117, 117, 117);
+    
 
+    
+    
+    ContaBanco conta;
+    JLabel lblSaldo = new JLabel();
+    JTextArea inputDepositar = new JTextArea();
+    JTextArea inputSacar = new JTextArea();
+
+    
+
+/* 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -41,8 +60,20 @@ public class JContaBancoUi extends JFrame {
             }
         });
     }
+*/
 
-    public JContaBancoUi() {
+    
+    
+
+    public JContaBancoUi(ContaBanco contaRecebida) {
+        this.conta = contaRecebida;
+        boasVindas(conta);
+
+        // padrão BR como localidade (importante para conversão decimal)
+        // Locale.setDefault(Locale.of("pt", "BR"));
+        Locale.setDefault(new Locale("pt", "BR"));
+        
+
         setTitle("Banco Digital - Gerenciamento de Conta");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 500, 600);
@@ -88,7 +119,9 @@ public class JContaBancoUi extends JFrame {
         lblSaldoTexto.setBounds(20, 15, 200, 25);
         panelSaldo.add(lblSaldoTexto);
         
-        JLabel lblSaldo = new JLabel("R$ 0,00");
+        // JLabel lblSaldo = new JLabel("R$ " + conta.getValorAtual() );
+
+        lblSaldo.setText( "R$ " + conta.getValorAtual() );
         lblSaldo.setForeground(COR_PRIMARIA);
         lblSaldo.setFont(new Font("Segoe UI", Font.BOLD, 32));
         lblSaldo.setBounds(20, 45, 400, 40);
@@ -121,13 +154,38 @@ public class JContaBancoUi extends JFrame {
         lblRsDepositar.setBounds(20, 85, 25, 30);
         panelOperacoes.add(lblRsDepositar);
         
-        JTextArea inputDepositar = new JTextArea();
+        // JTextArea inputDepositar = new JTextArea();
         inputDepositar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         inputDepositar.setBorder(new LineBorder(new Color(200, 200, 200), 1));
         inputDepositar.setBounds(50, 85, 120, 30);
         panelOperacoes.add(inputDepositar);
         
         JButton btnDepositar = new JButton("Depositar");
+        btnDepositar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+
+                if( !conta.getStatus() ){
+                    JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(inputDepositar.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Campo de depósito vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(!isDouble(inputDepositar.getText())){
+                    JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    Double elemento = conversorSeparador(inputDepositar.getText());
+
+                    conta.setValorAtual( conta.getValorAtual() + elemento );
+
+                    JOptionPane.showMessageDialog(null, "Valor de R$ " + elemento + " Depositado", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                    // atualizar valor na interface
+                    atualizarValor(conta);
+
+                }
+            }
+        });
         btnDepositar.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnDepositar.setForeground(Color.WHITE);
         btnDepositar.setBackground(COR_SUCESSO);
@@ -151,13 +209,42 @@ public class JContaBancoUi extends JFrame {
         lblRsSacar.setBounds(20, 155, 25, 30);
         panelOperacoes.add(lblRsSacar);
         
-        JTextArea inputSacar = new JTextArea();
+        // JTextArea inputSacar = new JTextArea();
+
         inputSacar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         inputSacar.setBorder(new LineBorder(new Color(200, 200, 200), 1));
         inputSacar.setBounds(50, 155, 120, 30);
         panelOperacoes.add(inputSacar);
         
         JButton btnSacar = new JButton("Sacar");
+        btnSacar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+
+                if( !conta.getStatus() ){
+                    JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(inputSacar.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Campo de saque vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(!isDouble(inputSacar.getText())){
+                    JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(conta.getValorAtual() <= 0 || Double.parseDouble(inputSacar.getText()) > conta.getValorAtual() ){
+                    JOptionPane.showMessageDialog(null, "Valor de saque inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    Double elemento = conversorSeparador(inputSacar.getText());
+
+                    conta.setValorAtual( conta.getValorAtual() - elemento );
+
+                    JOptionPane.showMessageDialog(null, "Valor de R$ " + elemento + " sacado.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                    // atualizar valor na interface
+                    atualizarValor(conta);
+
+                }
+            }
+        });
         btnSacar.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnSacar.setForeground(Color.WHITE);
         btnSacar.setBackground(COR_ALERTA);
@@ -194,7 +281,38 @@ public class JContaBancoUi extends JFrame {
         lblAlert.setBounds(15, 10, 410, 20);
         panelAlertas.add(lblAlert);
     }
+
+    private void boasVindas(ContaBanco contaRecebida){
+        JOptionPane.showMessageDialog(null, "Bonus de " + contaRecebida.getTipoConta() + ": R$ " + contaRecebida.getValorAtual(), "Boas vindas", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    private boolean isDouble(String text) {
+        // Regex para aceita double
+        return text.matches("[0-9]*[.,]?[0-9]*"); 
+    }
+
+    private void atualizarValor(ContaBanco contaRecebida){
+        // atualizar valor na interface
+        lblSaldo.setText( "R$ " + contaRecebida.getValorAtual() );
+    }
+
+    private Double conversorSeparador(String elemento) {
+        if ( elemento.contains(",") ) {
+            String valorTratado = elemento.replace(",", ".");
+
+            return Double.parseDouble(valorTratado);
+        }else{
+            return Double.parseDouble(elemento);
+        }
+     
+    }
+
     
+    
+
+
+
+
     // Método auxiliar para adicionar efeito hover aos botões
     private void adicionarHoverEffect(JButton btn, Color corOriginal) {
         Color corHover = corOriginal.darker();
