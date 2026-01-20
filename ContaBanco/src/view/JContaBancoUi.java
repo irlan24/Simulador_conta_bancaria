@@ -220,6 +220,8 @@ public class JContaBancoUi extends JFrame {
         btnSacar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 
+                Double elemento = conversorSeparador(inputSacar.getText());
+
                 if( !conta.getStatus() ){
                     JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -229,12 +231,10 @@ public class JContaBancoUi extends JFrame {
                 else if(!isDouble(inputSacar.getText())){
                     JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
-                else if(conta.getValorAtual() <= 0 || Double.parseDouble(inputSacar.getText()) > conta.getValorAtual() ){
+                else if(conta.getValorAtual() <= 0 || elemento > conta.getValorAtual() ){
                     JOptionPane.showMessageDialog(null, "Valor de saque inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
-                    Double elemento = conversorSeparador(inputSacar.getText());
-
                     conta.setValorAtual( conta.getValorAtual() - elemento );
 
                     JOptionPane.showMessageDialog(null, "Valor de R$ " + elemento + " sacado.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
