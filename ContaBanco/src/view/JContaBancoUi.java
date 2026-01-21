@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+// import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.util.Locale;
+
 
 
 
@@ -67,7 +68,9 @@ public class JContaBancoUi extends JFrame {
 
     public JContaBancoUi(ContaBanco contaRecebida) {
         this.conta = contaRecebida;
-        boasVindas(conta);
+
+        // Msg para informar bonus de boas vindas.
+        conta.boasVindas();
 
         // padrão BR como localidade (importante para conversão decimal)
         // Locale.setDefault(Locale.of("pt", "BR"));
@@ -119,9 +122,8 @@ public class JContaBancoUi extends JFrame {
         lblSaldoTexto.setBounds(20, 15, 200, 25);
         panelSaldo.add(lblSaldoTexto);
         
-        // JLabel lblSaldo = new JLabel("R$ " + conta.getValorAtual() );
-
-        lblSaldo.setText( "R$ " + conta.getValorAtual() );
+        // inicia com atualização do saldo na interface
+        conta.atualizarValor(lblSaldo);
         lblSaldo.setForeground(COR_PRIMARIA);
         lblSaldo.setFont(new Font("Segoe UI", Font.BOLD, 32));
         lblSaldo.setBounds(20, 45, 400, 40);
@@ -164,26 +166,28 @@ public class JContaBancoUi extends JFrame {
         btnDepositar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 
-                if( !conta.getStatus() ){
-                    JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-                else if(inputDepositar.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null, "Campo de depósito vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-                else if(!isDouble(inputDepositar.getText())){
-                    JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-                else{
-                    Double elemento = conversorSeparador(inputDepositar.getText());
+                conta.depositar(inputDepositar, lblSaldo);
 
-                    conta.setValorAtual( conta.getValorAtual() + elemento );
+                // if( !conta.getStatus() ){
+                //     JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
+                // }
+                // else if(inputDepositar.getText().isEmpty()){
+                //     JOptionPane.showMessageDialog(null, "Campo de depósito vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+                // }
+                // else if(!isDouble(inputDepositar.getText())){
+                //     JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
+                // }
+                // else{
+                //     Double elemento = conversorSeparador(inputDepositar.getText());
 
-                    JOptionPane.showMessageDialog(null, "Valor de R$ " + elemento + " Depositado", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                //     conta.setValorAtual( conta.getValorAtual() + elemento );
 
-                    // atualizar valor na interface
-                    atualizarValor(conta);
+                //     JOptionPane.showMessageDialog(null, "Valor de R$ " + elemento + " Depositado", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-                }
+                //     // atualizar valor na interface
+                //     atualizarValor(conta);
+
+                // }
             }
         });
         btnDepositar.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -220,29 +224,31 @@ public class JContaBancoUi extends JFrame {
         btnSacar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 
-                Double elemento = conversorSeparador(inputSacar.getText());
+                // Double elemento = conversorSeparador(inputSacar.getText());
+                
 
-                if( !conta.getStatus() ){
-                    JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-                else if(inputSacar.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null, "Campo de saque vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-                else if(!isDouble(inputSacar.getText())){
-                    JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-                else if(conta.getValorAtual() <= 0 || elemento > conta.getValorAtual() ){
-                    JOptionPane.showMessageDialog(null, "Valor de saque inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-                else{
-                    conta.setValorAtual( conta.getValorAtual() - elemento );
+                // if( !conta.getStatus() ){
+                //     JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
+                // }
+                // else if(inputSacar.getText().isEmpty()){
+                //     JOptionPane.showMessageDialog(null, "Campo de saque vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+                // }
+                // else if(!isDouble(inputSacar.getText())){
+                //     JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
+                // }
+                // else if(conta.getValorAtual() <= 0 || elemento > conta.getValorAtual() ){
+                //     JOptionPane.showMessageDialog(null, "Valor de saque inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                // }
+                // else{
+                //     conta.setValorAtual( conta.getValorAtual() - elemento );
 
-                    JOptionPane.showMessageDialog(null, "Valor de R$ " + elemento + " sacado.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                //     JOptionPane.showMessageDialog(null, "Valor de R$ " + elemento + " sacado.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-                    // atualizar valor na interface
-                    atualizarValor(conta);
+                //     // atualizar valor na interface
+                //     atualizarValor(conta);
 
-                }
+                // }
+                conta.sacar(inputSacar, lblSaldo);
             }
         });
         btnSacar.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -257,6 +263,14 @@ public class JContaBancoUi extends JFrame {
         
         // Botão de Informações
         JButton btnMostrarInfo = new JButton("Informações da Conta");
+        btnMostrarInfo.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+
+                conta.mostrarInfo();
+
+            }
+        });
+
         btnMostrarInfo.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnMostrarInfo.setForeground(Color.WHITE);
         btnMostrarInfo.setBackground(COR_SECUNDARIA);
@@ -282,33 +296,38 @@ public class JContaBancoUi extends JFrame {
         panelAlertas.add(lblAlert);
     }
 
-    private void boasVindas(ContaBanco contaRecebida){
-        JOptionPane.showMessageDialog(null, "Bonus de " + contaRecebida.getTipoConta() + ": R$ " + contaRecebida.getValorAtual(), "Boas vindas", JOptionPane.PLAIN_MESSAGE);
-    }
+    // Métodos desenvolvidos como utilitários para melhorar a organização do código
 
-    private boolean isDouble(String text) {
-        // Regex para aceita double
-        return text.matches("[0-9]*[.,]?[0-9]*"); 
-    }
+    // private void boasVindas(ContaBanco contaRecebida){
+    //     JOptionPane.showMessageDialog(null, "Bonus de " + contaRecebida.getTipoConta() + ": R$ " + contaRecebida.getValorAtual(), "Boas vindas", JOptionPane.PLAIN_MESSAGE);
+    // }
 
-    private void atualizarValor(ContaBanco contaRecebida){
-        // atualizar valor na interface
-        lblSaldo.setText( "R$ " + contaRecebida.getValorAtual() );
-    }
+    // private boolean isDouble(String text) {
+    //     // Regex para aceita double
+    //     return text.matches("[0-9]*[.,]?[0-9]*"); 
+    // }
 
-    private Double conversorSeparador(String elemento) {
-        if ( elemento.contains(",") ) {
-            String valorTratado = elemento.replace(",", ".");
+    // private void atualizarValor(ContaBanco contaRecebida){
+    //     // atualizar valor na interface com 2 casas decimais e separador de vírgula
+    //     String saldoFormatado = String.format(Locale.getDefault(), "R$ %.2f", contaRecebida.getValorAtual());
+        
+    //     lblSaldo.setText( saldoFormatado );
+    // }
 
-            return Double.parseDouble(valorTratado);
-        }else{
-            return Double.parseDouble(elemento);
-        }
+    // private Double conversorSeparador(String elemento) {
+
+    //     if ( elemento.contains(",") ) {
+    //         String valorTratado = elemento.replace(",", ".");
+
+    //         return Double.parseDouble(valorTratado);
+    //     }else{
+
+    //         return Double.parseDouble(elemento);
+    //     }
      
-    }
+    // }
 
-    
-    
+   
 
 
 

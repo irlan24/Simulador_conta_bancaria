@@ -1,6 +1,13 @@
 package controller;
+import java.util.Locale;
+
+import javax.swing.JLabel;
 // import view.JCadastrarCliente;
 import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+
+
 
 public class ContaBanco{   
     
@@ -8,18 +15,16 @@ public class ContaBanco{
 	private String nomeCliente;
 	private double valorAtual;
 	private boolean status;
-	// JCadastrarCliente cadastrarCliente = new JCadastrarCliente();	
-	
+	JLabel lblSaldo;
 	
 	
 	// Contrutor
-	// String nomeCliente, String tipoConta
+	
 	public ContaBanco(){
 		this.setStatus(false);
-		
+		Locale.setDefault(new Locale("pt", "BR"));
 		
 	}
-	
 	
 	// Getters and setters   
 	
@@ -27,8 +32,8 @@ public class ContaBanco{
 	    return this.status;
 	}
 	
-	
-	private void setStatus(boolean status){	// use método fecharConta() para mudar status
+	public void setStatus(boolean status){	
+
 		this.status = status;	    
 	}	
 	
@@ -50,86 +55,13 @@ public class ContaBanco{
 	
 	public String getNomeCliente(){
 	    return this.nomeCliente;
-	
 	}
 
 	public void setNomeCliente(String nomeCliente) {
 		this.nomeCliente = nomeCliente;
 	}
 
-// ============================================== METODOS =====================	
-	
-
-
 /*
-// método depositar
-
-public void depositar(double valor){
-	if (!this.getStatus()) {
-		System.out.println("Crie uma conta antes de utilizar o sistema.");
-	}
-   else if(valor <= 0 ){
-		System.out.println("Valor de depósito inválido!");
-	}
-	else{
-		this.valorAtual += valor;
-	}
-}
-
-
-// método Sacar valor
-public void sacar(double valor) {
-	if (!this.getStatus()) { 
-		System.out.println("Crie uma conta antes de utilizar o sistema.");
-	} 
-	else if (valor <= 0) { 
-		System.out.println("Erro: O valor do saque deve ser maior que zero.");
-	} 
-	else if (valor > this.getValorAtual()) { 
-		System.out.println("Saldo insuficiente! Você tentou sacar R$" + valor + 
-						   ", mas seu saldo é R$ " + this.getValorAtual());
-	} 
-	else {
-		this.valorAtual -= valor;
-		System.out.println("Saque de R$ " + valor + " realizado com sucesso!");
-		System.out.println("Saldo atual: R$ " + this.getValorAtual());
-	}
-	
-}
-
-// Mostrar informações da conta
-public void mostrarInfo(){
-	if (!this.getStatus()) {
-		System.out.println("Crie uma conta antes de utilizar o sistema.");
-	}
-	else{
-		String nomeContaCompleto; 
-		String statusContaCompleto;         	
-		
-		if(this.getTipoConta() == "CC") {
-			nomeContaCompleto = "Conta corrente";    	    	 	    	
-		}
-		else {
-			nomeContaCompleto = "Conta poupança";    	    	 
-		}
-		
-		if(this.getStatus()) {
-			statusContaCompleto = "Aberta";
-		}
-		else {
-			statusContaCompleto = "Fechada";
-		}
-		
-		System.out.println("O usuário do sistema: " + this.getNomeCliente());
-		System.out.println("O tipo de conta: " + nomeContaCompleto);
-		System.out.println("O saldo disponível na conta: R$ " + this.getValorAtual());
-		System.out.println("O status da conta: " + statusContaCompleto);
-		
-				
-	}
-	
-}
-
 public void fecharConta(){
 	if (this.getValorAtual() > 0){
 		System.out.println("Você possui R$ " + valorAtual + " em conta. Saque todo o valor antes de encerrar a conta!");	        
@@ -144,13 +76,12 @@ public void fecharConta(){
 }
  */
 	
-	    
 
 
-
+// ================== MÉTODOS PRINCIPAIS =============
 	
 
-
+	// Valida os dados na tela de cadastro do usuário
 	public boolean validarDados(String nome, String conta){
 
 		if(nome == null || nome.trim().isEmpty() || conta.equals("Selecione uma opção")) {
@@ -167,6 +98,125 @@ public void fecharConta(){
 			return true;
 		}
 	}
+
+	// método depositar
+
+	public void depositar(JTextArea inputDepositar, JLabel lblSaldo){
+		if( !this.getStatus() ){
+			JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(inputDepositar.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Campo de depósito vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(!isDouble(inputDepositar.getText())){
+			JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		else{
+			Double elemento = conversorSeparador(inputDepositar.getText());
+
+			this.setValorAtual( this.getValorAtual() + elemento );
+
+			JOptionPane.showMessageDialog(null, "Valor de R$ " + elemento + " Depositado", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+			// atualizar valor na interface
+			atualizarValor(lblSaldo);
+
+		}
+	}
+
+
+	// método Sacar valor
+	public void sacar(JTextArea inputSacar, JLabel lblSaldo) {
+					
+
+		if( !this.getStatus() ){
+			JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(inputSacar.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Campo de saque vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(!isDouble(inputSacar.getText())){
+			JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(this.getValorAtual() <= 0 || conversorSeparador(inputSacar.getText()) > this.getValorAtual() ){
+			JOptionPane.showMessageDialog(null, "Valor de saque inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		else{
+
+			Double elemento = conversorSeparador(inputSacar.getText());
+
+			this.setValorAtual( this.getValorAtual() - elemento );
+
+			JOptionPane.showMessageDialog(null, "Valor de R$ " + elemento + " sacado.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+			// atualizar valor na interface
+			atualizarValor(lblSaldo);
+
+		}
+		
+	}
+
+
+	// Mostrar informações da conta
+	public void mostrarInfo(){
+
+		if(!this.getStatus()){
+
+			JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		else{
+
+			String statusContaCompleto = this.getStatus() ? "Ativa" : "Inativa";
+			String nomeContaCompleto = this.getTipoConta();
+
+			String info = "Usuário: " + this.getNomeCliente() + "\n" +
+							"Tipo de Conta: " + nomeContaCompleto + "\n" +
+							"Saldo Disponível: R$ " + this.getValorAtual() + "\n" +
+							"Status da Conta: " + statusContaCompleto;
+
+			JOptionPane.showMessageDialog(null, info, "Informações da Conta", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+	}
+
+
+	// ===================== MÉTODOS AUXILIARES ==================
+
+
+	// Atualiza o valor na interface
+	public void atualizarValor( JLabel lblSaldo){
+        // atualizar valor na interface com 2 casas decimais e separador de vírgula
+        String saldoFormatado = String.format(Locale.getDefault(), "R$ %.2f", this.getValorAtual());
+        
+        lblSaldo.setText( saldoFormatado );
+    }
+
+	// Verifica se existe letras na sentença
+	private boolean isDouble(String text) {
+        // Regex para aceita double
+        return text.matches("[0-9]*[.,]?[0-9]*"); 
+    }
+
+
+	// Converte o separador de ponto para vírgula
+	private Double conversorSeparador(String elemento) {
+
+        if ( elemento.contains(",") ) {
+            String valorTratado = elemento.replace(",", ".");
+
+            return Double.parseDouble(valorTratado);
+        }else{
+
+            return Double.parseDouble(elemento);
+        }
+     
+    }
+
+	// Msg de boas vindas ao sistema e informativo do bonus.
+	public void boasVindas(){
+        JOptionPane.showMessageDialog(null, "Bonus de " + this.getTipoConta() + ": R$ " + this.getValorAtual(), "Boas vindas", JOptionPane.PLAIN_MESSAGE);
+    }
+
 	    	
 }
 	
