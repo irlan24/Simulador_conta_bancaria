@@ -157,28 +157,17 @@ mvn exec:java -Dexec.mainClass="App"
 ## 📸 Capturas de Tela
 
 ### Tela de Cadastro
-![Tela de Cadastro](screenshots/tela-cadastro.png)
+![Tela de Cadastro]([screenshots/tela-cadastro.png](https://github.com/irlan24/Simulador_conta_bancaria/blob/trampo/ContaBanco/screenshots/cadastro.png))
 *Tela inicial para cadastro de novos clientes com validação de CPF*
 
 ### Tela Principal - Gerenciamento de Conta
-![Tela Principal](screenshots/tela-principal.png)
+![Tela Principal](https://github.com/irlan24/Simulador_conta_bancaria/blob/trampo/ContaBanco/screenshots/principal.png)
 *Interface principal mostrando saldo e opções de operações*
 
-### Operação de Depósito
-![Depósito](screenshots/deposito.png)
-*Realizando depósito com atualização em tempo real*
-
-### Operação de Saque
-![Saque](screenshots/saque.png)
-*Realizando saque com validação de saldo*
-
 ### Consulta de Informações
-![Informações](screenshots/informacoes.png)
+![Informações](https://github.com/irlan24/Simulador_conta_bancaria/blob/trampo/ContaBanco/screenshots/principal_infoConta.png)
 *Exibindo informações completas da conta*
 
-### Validação de CPF
-![Validação CPF](screenshots/validacao-cpf.png)
-*Sistema validando CPF inválido*
 
 ## 🧪 Testes
 
