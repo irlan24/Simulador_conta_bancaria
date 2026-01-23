@@ -157,7 +157,7 @@ mvn exec:java -Dexec.mainClass="App"
 ## 📸 Capturas de Tela
 
 ### Tela de Cadastro
-![Tela de Cadastro]([screenshots/tela-cadastro.png](https://github.com/irlan24/Simulador_conta_bancaria/blob/trampo/ContaBanco/screenshots/cadastro.png))
+![Tela de Cadastro](https://github.com/irlan24/Simulador_conta_bancaria/blob/trampo/ContaBanco/screenshots/cadastro.png)
 *Tela inicial para cadastro de novos clientes com validação de CPF*
 
 ### Tela Principal - Gerenciamento de Conta
