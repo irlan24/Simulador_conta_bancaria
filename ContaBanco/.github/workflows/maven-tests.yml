@@ -1,0 +1,40 @@
+name: Maven - Build & Test (PR main)
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    name: Build and Test with Maven
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout do código
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Configuração do Java
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          cache: maven
+
+      # 3️⃣ Verificação do Maven
+      - name: Show Maven version
+        run: mvn test
+
+      # 4️⃣ Build + Testes
+      - name: Build and run tests
+        run: mvn clean verify
+
+      # 5️⃣ Publicar relatório de testes (mesmo se falhar)
+      - name: Publish test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-test-reports
+          path: target/surefire-reports
