@@ -5,6 +5,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class ContaBanco{   
     
 	private String tipoConta;
@@ -37,7 +40,13 @@ public class ContaBanco{
 	}	
 	
 	public double getValorAtual(){
-	    return this.valorAtual;	    
+
+			// double valorFormatado = Double.parseDouble(String.format(Locale.getDefault(), "%.2f", this.valorAtual));
+
+			// return valorFormatado;
+		
+		return this.converterMoeda(this.valorAtual);
+	    	    
 	}
 	
 	public void setValorAtual(double valorAtual){
@@ -67,23 +76,7 @@ public class ContaBanco{
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
 
-/*
-public void fecharConta(){
-	if (this.getValorAtual() > 0){
-		System.out.println("Você possui R$ " + valorAtual + " em conta. Saque todo o valor antes de encerrar a conta!");	        
-	}
-	else if(!this.getStatus()){
-		System.out.println("Você não possui conta aberta.");
-	}
-	else{
-		System.out.println("Conta " + this.getTipoConta() + " foi finalizada.");
-		this.setStatus(false);
-	}
-}
- */
-	
 
 
 // ================== MÉTODOS PRINCIPAIS =============
@@ -99,7 +92,7 @@ public void fecharConta(){
 			JOptionPane.showMessageDialog(null, "Dados de cadastro inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		else if(!this.ValidarCpf(cpf)){
+		else if(!this.validarCpf(cpf)){
 			JOptionPane.showMessageDialog(null, "CPF Inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} 
@@ -118,22 +111,31 @@ public void fecharConta(){
 	public void depositar(JTextArea inputDepositar, JLabel lblSaldo){
 		if( !this.getStatus() ){
 			JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
+
+			// Limpar campo input
+			this.limparInput(inputDepositar);
 		}
 		else if(inputDepositar.getText().isEmpty()){
 			JOptionPane.showMessageDialog(null, "Campo de depósito vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		else if(!isDouble(inputDepositar.getText())){
 			JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
+
+			// Limpar campo input
+			this.limparInput(inputDepositar);
 		}
 		else{
 			Double elemento = conversorSeparador(inputDepositar.getText());
 
 			this.setValorAtual( this.getValorAtual() + elemento );
 
-			JOptionPane.showMessageDialog(null, "Valor de R$ " + String.format(Locale.getDefault(), "R$ %.2f", elemento) + " Depositado", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Valor de R$ " + String.format(Locale.getDefault(), "%.2f", elemento) + " Depositado", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
 			// atualizar valor na interface
 			atualizarValor(lblSaldo);
+
+			// Limpar campo input
+			this.limparInput(inputDepositar);
 
 		}
 	}
@@ -145,15 +147,26 @@ public void fecharConta(){
 
 		if( !this.getStatus() ){
 			JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
+			
+			// Limpar campo input
+			this.limparInput(inputSacar);
 		}
 		else if(inputSacar.getText().isEmpty()){
 			JOptionPane.showMessageDialog(null, "Campo de saque vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+			
+			
 		}
 		else if(!isDouble(inputSacar.getText())){
 			JOptionPane.showMessageDialog(null, "Campo apenas recebe valor númerico.", "Erro", JOptionPane.ERROR_MESSAGE);
+
+			// Limpar campo input
+			this.limparInput(inputSacar);
 		}
 		else if(this.getValorAtual() <= 0 || conversorSeparador(inputSacar.getText()) > this.getValorAtual() ){
 			JOptionPane.showMessageDialog(null, "Valor de saque inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+
+			// Limpar campo input
+			this.limparInput(inputSacar);
 		}
 		else{
 
@@ -161,10 +174,15 @@ public void fecharConta(){
 
 			this.setValorAtual( this.getValorAtual() - elemento );
 
-			JOptionPane.showMessageDialog(null, "Valor de R$ " + String.format(Locale.getDefault(), "R$ %.2f", elemento) + " sacado.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Valor de R$ " + String.format(Locale.getDefault(), "%.2f", elemento) + " sacado.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
+			
 			// atualizar valor na interface
 			atualizarValor(lblSaldo);
+
+			// Limpar campo input
+			this.limparInput(inputSacar);
+			
 
 		}
 		
@@ -174,27 +192,45 @@ public void fecharConta(){
 	// Mostrar informações da conta
 	public void mostrarInfo(){
 
+		String statusContaCompleto = this.getStatus() ? "Ativa" : "Inativa";
+		String nomeContaCompleto = this.getTipoConta();
+
+		String cpfCompleto = this.getCpf();
+
+		String info = 
+		"Usuário: " + this.getNomeCliente() + "\n" +
+		"CPF: " + cpfCompleto + "\n" +
+		"Tipo de Conta: " + nomeContaCompleto + "\n" +
+		"Saldo Disponível: R$ " + String.format(Locale.getDefault(), "%.2f", this.getValorAtual())  + "\n" +
+		"Status da Conta: " + statusContaCompleto;
+
 		if(!this.getStatus()){
-
-			JOptionPane.showMessageDialog(null, "Não possui conta ativa", "Erro", JOptionPane.ERROR_MESSAGE);
-			}
+			JOptionPane.showMessageDialog(null, info, "CONTA ENCERRADA!", JOptionPane.WARNING_MESSAGE);
+		}
 		else{
-
-			String statusContaCompleto = this.getStatus() ? "Ativa" : "Inativa";
-			String nomeContaCompleto = this.getTipoConta();
-
-			String cpfCompleto = this.getCpf();
-
-			String info = 
-			"Usuário: " + this.getNomeCliente() + "\n" +
-			"CPF: " + cpfCompleto + "\n" +
-			"Tipo de Conta: " + nomeContaCompleto + "\n" +
-			"Saldo Disponível: R$ " + String.format(Locale.getDefault(), "R$ %.2f", this.getValorAtual())  + "\n" +
-			"Status da Conta: " + statusContaCompleto;
-
+						
 			JOptionPane.showMessageDialog(null, info, "Informações da Conta", JOptionPane.INFORMATION_MESSAGE);
 		}
+		//}
 		
+	}
+
+	public void fecharConta(){
+		if (this.getValorAtual() > 0){
+			
+			JOptionPane.showMessageDialog(null, "Você possui R$ " + String.format(Locale.getDefault(), "%.2f", this.getValorAtual()) + " em conta.\nSaque antes de encerrar a conta!", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(!this.getStatus()){
+			JOptionPane.showMessageDialog(null, "Você não possui conta aberta.", "Erro", JOptionPane.ERROR_MESSAGE);
+			
+		}
+		else{
+			JOptionPane.showMessageDialog(null, this.getTipoConta() + " foi finalizada.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+			this.setStatus(false);
+
+			
+		}
 	}
 
 
@@ -222,10 +258,9 @@ public void fecharConta(){
         if ( elemento.contains(",") ) {
             String valorTratado = elemento.replace(",", ".");
 
-            return Double.parseDouble(valorTratado);
+            return this.converterMoeda(Double.parseDouble(valorTratado));
         }else{
-
-            return Double.parseDouble(elemento);
+            return this.converterMoeda(Double.parseDouble(elemento));
         }
      
     }
@@ -235,7 +270,15 @@ public void fecharConta(){
         JOptionPane.showMessageDialog(null, "Bonus de " + this.getTipoConta() + ": R$ " + this.getValorAtual(), "Boas vindas", JOptionPane.PLAIN_MESSAGE);
     }
 
-	public boolean ValidarCpf(String CPF) {
+	public double converterMoeda(double moeda){
+
+		double valorTruncado = new BigDecimal(String.valueOf(moeda)).setScale(2, RoundingMode.DOWN)
+		.doubleValue();
+
+		return valorTruncado;
+	}
+
+	public boolean validarCpf(String CPF) {
         
 
 		if (CPF == null) return false;
@@ -275,7 +318,7 @@ public void fecharConta(){
 			boolean isValid = (dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10));
 
 			if (isValid) {
-                // 2. SE FOR VÁLIDO, SETTA O CPF no formato correto 
+                // SE FOR VÁLIDO, SETTA O CPF no formato correto 
                 this.setCpf(CPF.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4"));
             }
 
@@ -287,6 +330,10 @@ public void fecharConta(){
 
        
     }
+
+	public void limparInput(JTextArea input){
+		input.setText("");
+	}
 
 	    	
 }
