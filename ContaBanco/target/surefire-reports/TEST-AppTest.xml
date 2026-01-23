@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="AppTest" time="0.172" tests="31" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="25"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\irlan.silva\OneDrive - CREDCESTA\Documentos\Java\projetos\treino02\Simulador_conta_bancaria\ContaBanco\target\test-classes;C:\Users\irlan.silva\OneDrive - CREDCESTA\Documentos\Java\projetos\treino02\Simulador_conta_bancaria\ContaBanco\target\classes;C:\Users\irlan.silva\.m2\repository\br\com\caelum\stella\caelum-stella-core\2.1.2\caelum-stella-core-2.1.2.jar;C:\Users\irlan.silva\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.1\junit-jupiter-5.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\irlan.silva\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\irlan.silva\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.1\junit-jupiter-params-5.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="America/Bahia"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="25"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.boot.library.path" value="C:\Java\jdk-25.0.1\bin"/>
+    <property name="sun.java.command" value="C:\Users\irlan.silva\AppData\Local\Temp\surefire506755470629793988\surefirebooter-20260123080819210_3.jar C:\Users\irlan.silva\AppData\Local\Temp\surefire506755470629793988 2026-01-23T08-08-18_744-jvmRun1 surefire-20260123080819210_1tmp surefire_0-20260123080819210_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="C:\Users\irlan.silva\OneDrive - CREDCESTA\Documentos\Java\projetos\treino02\Simulador_conta_bancaria\ContaBanco\target\test-classes;C:\Users\irlan.silva\OneDrive - CREDCESTA\Documentos\Java\projetos\treino02\Simulador_conta_bancaria\ContaBanco\target\classes;C:\Users\irlan.silva\.m2\repository\br\com\caelum\stella\caelum-stella-core\2.1.2\caelum-stella-core-2.1.2.jar;C:\Users\irlan.silva\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.1\junit-jupiter-5.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\irlan.silva\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\irlan.silva\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.1\junit-jupiter-params-5.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;C:\Users\irlan.silva\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\irlan.silva"/>
+    <property name="user.language" value="pt"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-10-21"/>
+    <property name="java.home" value="C:\Java\jdk-25.0.1"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\irlan.silva\OneDrive - CREDCESTA\Documentos\Java\projetos\treino02\Simulador_conta_bancaria\ContaBanco"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="surefire.real.class.path" value="C:\Users\irlan.silva\AppData\Local\Temp\surefire506755470629793988\surefirebooter-20260123080819210_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="25.0.1+8-LTS-27"/>
+    <property name="user.name" value="irlan.silva"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\irlan.silva\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\IRLAN~1.SIL\AppData\Local\Temp\"/>
+    <property name="java.version" value="25.0.1"/>
+    <property name="user.dir" value="C:\Users\irlan.silva\OneDrive - CREDCESTA\Documentos\Java\projetos\treino02\Simulador_conta_bancaria\ContaBanco"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Java\jdk-25.0.1\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;c:\Users\irlan.silva\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;c:\Users\irlan.silva\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Users\irlan.silva\AppData\Local\Programs\Python\Python313\Scripts\;C:\Users\irlan.silva\AppData\Local\Programs\Python\Python313\;C:\Users\irlan.silva\AppData\Local\Microsoft\WindowsApps;C:\Users\irlan.silva\AppData\Local\Programs\Microsoft VS Code\bin;C:\Java\jdk-25.0.1\bin;C:\Users\irlan.silva\AppData\Local\Programs\Git\cmd;C:\apache-maven-3.9.12-bin\apache-maven-3.9.12\bin;c:\Users\irlan.silva\.vscode\extensions\vscjava.vscode-java-debug-0.58.5\bundled\scripts\noConfigScripts;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.0.1+8-LTS-27"/>
+    <property name="stdin.encoding" value="Cp1252"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="69.0"/>
+  </properties>
+  <testcase name="testValidarDadosNomeApenaEspacos" classname="AppTest" time="0.033"/>
+  <testcase name="testValidarCpfValidoComFormatacao" classname="AppTest" time="0.008"/>
+  <testcase name="testNaoPermitirSaqueAcimaSaldo" classname="AppTest" time="0.003"/>
+  <testcase name="testCpfFormatadoCorreto" classname="AppTest" time="0.004"/>
+  <testcase name="testValidarDadosSemTipoConta" classname="AppTest" time="0.002"/>
+  <testcase name="testSacarComSaldoSuficiente" classname="AppTest" time="0.002"/>
+  <testcase name="testCriarContaPoupancaComBonus" classname="AppTest" time="0.002"/>
+  <testcase name="testValidarDadosCompletoContaCorrente" classname="AppTest" time="0.003"/>
+  <testcase name="testContaIniciaInativa" classname="AppTest" time="0.001"/>
+  <testcase name="testValidarCpfDigitoVerificadorIncorreto" classname="AppTest" time="0.002"/>
+  <testcase name="testValidarCpfTamanhoInvalido" classname="AppTest" time="0.001"/>
+  <testcase name="testValidarDadosCompletoContaPoupanca" classname="AppTest" time="0.001"/>
+  <testcase name="testValidarCpfNulo" classname="AppTest" time="0.001"/>
+  <testcase name="testValoresDecimaisPrecisos" classname="AppTest" time="0.001"/>
+  <testcase name="testContaPermaneceInativaComValidacaoFalha" classname="AppTest" time="0.001"/>
+  <testcase name="testFluxoCompletoIntegracao" classname="AppTest" time="0.002"/>
+  <testcase name="testMultiplosCpfsDiferentes" classname="AppTest" time="0.003"/>
+  <testcase name="testCriarContaCorrenteComBonus" classname="AppTest" time="0.002"/>
+  <testcase name="testValidarDadosNomeVazio" classname="AppTest" time="0.002"/>
+  <testcase name="testFluxoCompletoContaPoupanca" classname="AppTest" time="0.001"/>
+  <testcase name="testSaldoZero" classname="AppTest" time="0.004"/>
+  <testcase name="testValidarCpfValidoSemFormatacao" classname="AppTest" time="0.002"/>
+  <testcase name="testContaFicaAtivaAposValidacao" classname="AppTest" time="0.002"/>
+  <testcase name="testMultiplasOperacoesSequenciais" classname="AppTest" time="0.001"/>
+  <testcase name="testValidarCpfComCaracteresEspeciais" classname="AppTest" time="0.001"/>
+  <testcase name="testValidarCpfDigitosRepetidos" classname="AppTest" time="0.001"/>
+  <testcase name="testNomesComCaracteresEspeciais" classname="AppTest" time="0.001"/>
+  <testcase name="testValidarDadosComCpfInvalido" classname="AppTest" time="0.001"/>
+  <testcase name="testValidarDadosNomeNulo" classname="AppTest" time="0.001"/>
+  <testcase name="testDepositarValor" classname="AppTest" time="0.001"/>
+  <testcase name="testOperacoesContaInativa" classname="AppTest" time="0.001"/>
+</testsuite>

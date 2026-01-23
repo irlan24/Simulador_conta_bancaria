@@ -1,9 +1,6 @@
-//import controller.ContaBanco;
+
 import java.awt.EventQueue;
 import view.JCadastrarCliente;
-
-
-
 
 public class App {
 	public static void main(String[] args) {
